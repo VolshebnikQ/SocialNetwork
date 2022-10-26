@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block title %} Чат {% endblock title %}
+{% block content %}
+      <main>
+            <div id="dropmenu" class="btn-group" role="group" aria-label="Button group with nested dropdown">
+                  <a class="btn btn-light" data-bs-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Выбрать город</a>
+                  <div class="dropdown-menu">
+                        {% for city in cities %}
+                        <a style="text-align: center;" class="dropdown-item" href="/chat/{{ city.slug }}"> {{ city.title }}</a>
+                        {% endfor %}
+                  </div>
+            </div>
+            <h3 style="text-align: center;" > Мои чаты </h3>
+            {% for city in cities_user %}
+                  <a style="text-align: center;" class="nav-link" href="/chat/{{ city.slug }}"> {{ city.title }}</a>
+            {% endfor %}
+      </main>
+{% endblock content%}

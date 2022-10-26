@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{% block title %} Люди {% endblock title %}
+{% block content %}
+      <main>
+        <div class="container">
+          <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item" role="presentation">
+              <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">Друзья</button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Заявки в друзья</button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact" type="button" role="tab" aria-controls="contact" aria-selected="false">Просмотр пользователей</button>
+            </li>
+          </ul>
+          <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+            {% for friend in friends %}
+              <a href="{% url 'username_page' friend.users_friend.username %}" class="friend__link">
+                <div class="row">
+                  <div class="col-3">
+                    <img src="{{ friend.users_friend.avatar.url }}" alt="Avatar">
+                  </div>
+                  <div class="col-9">
+                    {{ friend.users_friend.last_name }} {{ friend.users_friend.first_name }}
+                  </div>
+                </div>
+              </a>
+            {% endfor %}
+            </div>
+            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+              <p>Входящие</p>
+              {% for friend in incoming %}
+              <a href="{% url 'username_page' friend.user.username %}" class="friend__link">
+                <div class="row">
+                  <div class="col-3">
+                    <img src="{{ friend.user.avatar.url }}" alt="Avatar">
+                  </div>
+                  <div class="col-9">
+                    {{ friend.user.last_name }} {{ friend.user.first_name }}
+                  </div>
+                </div>
+              </a>
+            {% endfor %}
+            <p>Исходящие</p>
+              {% for friend in outgoing %}
+              <a href="{% url 'username_page' friend.users_friend.username %}" class="friend__link">
+                <div class="row">
+                  <div class="col-3">
+                    <img src="{{ friend.users_friend.avatar.url }}" alt="Avatar">
+                  </div>
+                  <div class="col-9">
+                    {{ friend.users_friend.last_name }} {{ friend.users_friend.first_name }}
+                  </div>
+                </div>
+              </a>
+            {% endfor %}
+            </div>
+            <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+              {% for user in users %}
+              <a href="{% url 'username_page' user.username %}" class="friend__link">
+                <div class="row">
+                  <div class="col-3">
+                    <img src="{{ user.avatar.url }}" alt="Avatar">
+                  </div>
+                  <div class="col-9">
+                    {{ user.last_name }} {{ user.first_name }}
+                  </div>
+                </div>
+              </a>
+            {% endfor %}
+            </div>
+          </div>
+
+
+          
+        </div>
+      </main>
+{% endblock content%}

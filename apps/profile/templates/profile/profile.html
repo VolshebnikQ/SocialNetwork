@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% block title %} {{ profile.first_name }} {{ profile.last_name }} {% endblock title %}
+{% block content %}
+      <main>
+        <div class="container">
+          <div class="row">
+            <div class="col-4 mr-10">
+              <div class="row mt-10">
+                <center>
+                <div class="col-12">
+                  <h3>{{ profile.last_name }} {{ profile.first_name }}</h3>
+                  <img src="{{ profile.avatar.url }}" class="profile__avatar" alt="Avatar">
+                </div>
+                </center>
+              </div>
+            </div>
+            <div class="col-5" style="margin: 5% 0 0 0;">
+              <p>День рождения: {{ profile.birthday }}</p>
+              <p>Город:  {{ profile.city }}</p>
+              <p>Обо мне:  {{ profile.about }}</p>
+              <br>
+              {% if user.username == profile.username %}
+                <a  href="{% url 'edit' %}" class="btn btn-primary">Редактировать</a>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+        <div id = "posts" class="alert alert-dismissible alert-light">
+          <div class="row">
+            <div class="col-12">
+            {% if user.username == profile.username %}
+              <form id="AddPost" action="{% url 'username_page' user.username %}" method="POST" enctype="multipart/form-data">
+              {% csrf_token %}
+                <div class="form-group">
+                  <label class="form-label">Пост:</label>
+                  <textarea class="form-control edit__about" name="content"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Опубликовать</button>
+              </form>
+            {% endif %}
+            </div>
+          </div>
+          {% for post in posts %}
+          <div class="alert alert-dismissible alert-light">
+            {% if request.user.username == profile.username %}
+            <form action="{% url 'delete_post' post.id %}" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <button type="submit" class="btn-close" data-bs-dismiss="alert"></button>
+            </form>
+            {% endif %}
+            <p><strong>{{ post.date }}</strong></p>
+            <p>{{ post.content }}</p>
+          </div>
+          {% endfor %}
+        </div>
+      </main>
+{% endblock content%}

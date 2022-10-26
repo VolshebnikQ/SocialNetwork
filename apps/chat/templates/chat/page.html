@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% block title %} {{ city }} {% endblock title %}
+{% block content %}
+      <main>
+        <div id="pageChat">
+            <div id="Chat" class="card border-secondary mb-3">
+                {% for message in messages %}
+                    {% if request.user.username == message.user.username %}
+                    <div id = "myMessage" class="card text-white bg-secondary mb-3 message">
+                        <a style="color: white;text-decoration: none;" href="{% url 'username_page' user.username %}" class="msAvatar">
+                            <div>{{ request.user.first_name }} {{ request.user.last_name }}</div>
+                            <img src="{{ user.avatar.url }}" alt="avatar">
+                        </a>
+                        <!--<div class="card-header">{{ request.user.first_name }} {{ request.user.last_name }}</div>-->
+                        <div class="LittleText">{{ message.date }}</div>
+                        <div class="card-body">
+                          <h4 class="card-title"></h4>
+                          <p class="card-text">{{ message.message_text }}</p>
+                        </div>
+                    </div>
+                    {% endif %}
+                    {% if request.user.username != message.user.username %}
+                        <div id = "otherMessage" class="card border-secondary mb-3 message">
+                        {% for user_p in profile %}
+                            {% if message.user.username == user_p.username %}
+                            <a style="text-decoration: none;" href="{% url 'username_page' user_p.username %}" class="msAvatar">
+                                <img src="{{ user_p.avatar.url }}" alt="avatar">
+                                <div>{{ user_p.first_name }} {{ user_p.last_name }}</div>
+                            </a>
+                                <!--<div class="card-header">{{ user_p.first_name }} {{ user_p.last_name }}</div>-->
+                            {% endif %}
+                        {% endfor %}
+                            <div class="LittleText">{{ message.date }}</div>
+                            <div class="card-body">
+                              <h4 class="card-title"></h4>
+                              <p class="card-text">{{ message.message_text }}</p>
+                            </div>  
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+        <div>
+            <form style="text-align: center;" id="leave_message" enctype="multipart/form-data" action="{% url 'city' city_sug %}" method="POST" class="form-inline mt-2">
+                {% csrf_token %}
+                
+                <div style="margin: 0 20% 0 70%;">
+                <button style="float: right;" type="submit" for="message_text" class="btn btn-success mb-3">Отправить</button></div>
+                <div style="margin: 0 30% 0 20%;">
+                <!--<input style="float: right;" class="form-control" type="file" id="formFile">-->
+                <textarea name="message_text" class="form-control" id="message_text" rows="3" maxlength="500"></textarea></div>
+            </form>
+        </div>
+      </main>
+{% endblock content%}

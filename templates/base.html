@@ -1,0 +1,69 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- _____________ TITLE ___________ -->
+    <title>{% block title %}{% endblock title %}</title>
+    <!-- ___________ METATAGS __________ -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="author" content="Rockdukan">
+    <meta name="HandheldFriendly" content="true">
+    <meta name="viewport" content="initial-scale=1.0, width=device-width">
+    <!-- ______________ CSS ____________ -->
+    <link rel="stylesheet" href="{% static 'project/css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'project/css/style.css' %}">
+        <!-- _________ JavaScript __________ -->
+    <!-- [if IE]>
+      <script src="{% static 'project/js/es5-shim.min.js'  %}"></script>
+      <script src="{% static 'project/js/html5shiv.min.js' %}"></script>
+      <script src="{% static 'project/js/respond.min.js' %}"></script>
+    <![endif] -->
+    <script src="{% static 'project/js/jquery-3.6.0.min.js' %}"></script>
+    <script src="{% static 'project/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'project/js/script.js' %}"></script>
+  </head>
+  <body onload="scroll()">
+    <nav id = "nav" class="navbar navbar-expand-lg navbar-dark bg-primary">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="/">Мой город</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">  
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          {% if user.is_authenticated %}
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="{% url 'username_page' user.username %}">Моя страница</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'friends' %}">Люди</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/chat">Чат</a>
+            </li>
+          {% endif %}
+        </ul>
+          {% if user.is_authenticated %}
+          <a style="color: white;" href="{% url 'username_page' user.username %}" class="nav__right">
+            <div>{{ user.first_name }} {{ user.last_name }}</div>
+            <img src="{{ user.avatar.url }}" alt="avatar">
+          </a>
+          <a style="color: white;" href="{% url 'admin:logout' %}">Выйти</a>
+          {% else %}
+          <a style="color: white;" href="{% url 'account_login' %}">Войти</a> / <a style="color: white;" href="{% url 'account_signup' %}">Зарегистрироваться</a>
+          {% endif %}
+          
+        </div>
+      </div>
+    </nav>
+    <!-- ___________ CONTENT ___________ -->
+      {% block content %}{% endblock content %}
+    <!-- _________ JavaScript __________ -->
+    <!-- Project script -->
+    <script src="{% static 'project/js/script.js' %}"></script>
+    <!-- Object-fit support -->
+    <script src="{% static 'project/js/ofi.min.js' %}"></script>
+    <script>objectFitImages();</script>
+  </body>
+</html>

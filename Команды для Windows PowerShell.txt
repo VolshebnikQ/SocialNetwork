@@ -1,0 +1,9 @@
+env/Scripts/activate 
+python manage.py runserver
+
+на случай если здесь нет папки env или что-то не так, то удалить папку env
+и ввести следующие команды, а потом те что сверху  
+
+pip install virtualenv
+python -m venv env
+pip install -r requirements.txt

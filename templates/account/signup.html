@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% load i18n %}
+{% block title %} Регистрация {% endblock title %}
+{% block head_title %}{% trans "Signup" %}{% endblock %}
+
+{% block content %}
+      <main id="main">
+        <div class="container" style="max-width: 400px;">
+          <form  action="{% url 'account_signup' %}" method="post">
+          {% csrf_token %}
+          {% if redirect_field_value %}
+            <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+          {% endif %}
+
+            <div class="mb-3">
+              <label for="exampleInputEmail1" class="form-label">Адрес электронной почты:</label>
+              <input type="email" class="form-control" aria-describedby="emailHelp" name="email" placeholder="E-mail адрес" autocomplete="email" required id="id_email">
+            </div>
+            <div class="mb-3">
+              <label for="exampleInputPassword1" class="form-label">Имя пользователя:</label>
+              <input type="text" class="form-control" name="username" placeholder="Имя пользователя" autocomplete="username" minlength="4" maxlength="150" required id="id_username">
+            </div>
+            <div class="mb-3">
+              <label for="exampleInputPassword1" class="form-label">Пароль:</label>
+              <input type="password" class="form-control" name="password1" placeholder="Пароль" autocomplete="new-password" required id="id_password1">
+            </div>
+            <div class="mb-3">
+              <label for="exampleInputPassword1" class="form-label">Повторить пароль:</label>
+              <input type="password" class="form-control" name="password2" placeholder="Пароль (ещё раз)" required id="id_password2">
+            </div>
+            <button type="submit" class="btn btn-primary">Зарегистрировать</button>
+          </form>
+        </div>
+      </main>    
+{% endblock content%}

@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block title %} Главная страница {% endblock title %}
+{% block content %}
+      <main>
+            {% if user.is_authenticated %}
+            {% if user.city == "" %}
+            <div style="margin: 10% 10%;" class="jumbotron">
+                  <p>От кого: Твой город</p>
+                  <h1 class="display-3">Привет, ты уже здесь!</h1>
+                  <h4 class="lead"> Теперь осталось совсем немного. Укажи свой город для начала общения в настройках профиля</h4>
+                  <hr class="my-4">
+                  
+                  <p class="lead">
+                        <a class="btn btn-primary btn-lg" href="{% url 'edit' %}" role="button">Настройки</a>
+                  </p>
+            </div>
+            {% else %}
+            <div style="margin: 10% 10%;" class="jumbotron">
+                  <p>От кого: Твой город</p>
+                  <h1 class="display-3">Тут скоро будут новости</h1>
+            </div>
+            {% endif %}
+            {% else %}
+      	<div style="margin: 10% 10%;" class="jumbotron">
+                  <p>От кого: Твой город</p>
+                  <h1 class="display-3">Привет, мир!</h1>
+                  <h4 class="lead"> Это полностью открытая платформа общения сразу со всем миром или для начала с твоим городом</h4>
+                  <hr class="my-4">
+                  
+                  <p class="lead">
+                        <a class="btn btn-primary btn-lg" href="{% url 'account_login' %}" role="button">Входи</a>
+                        или
+                        <a class="btn btn-primary btn-lg" href="{% url 'account_signup' %}" role="button">Реристрируйся</a>
+                  </p>
+            </div>
+            {% endif %}
+      </main>
+{% endblock content%}

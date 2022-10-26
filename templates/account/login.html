@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% load i18n %}
+{% block title %} Страница входа {% endblock title %}
+{% block head_title %}{% trans "Signup" %}{% endblock %}
+
+{% block content %}
+      <main id="main">
+        <div class="container" style="max-width: 400px;">
+          <form action="{% url 'account_login' %}" method="post">
+          {% csrf_token %}
+          {% if redirect_field_value %}
+            <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
+          {% endif %}
+            <div class="mb-3">
+              <label for="exampleInputEmail1" class="form-label">E-mail адрес</label>
+              <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="login" placeholder="E-mail адрес" autocomplete="email" required id="id_login">
+            </div>
+            <div class="mb-3">
+              <label for="exampleInputPassword1" class="form-label">Пароль</label>
+              <input type="password" class="form-control" id="exampleInputPassword1" name="password" placeholder="Пароль" autocomplete="current-password" required id="id_password">
+            </div>
+            <div class="mb-3 form-check">
+              <input type="checkbox" class="form-check-input" id="exampleCheck1">
+              <label class="form-check-label" name="remember" id="id_remember">Remember me</label>
+              <br>
+              <a href="{% url 'account_reset_password' %}">Восстановить пароль?</a>
+            </div>
+            <button type="submit" class="btn btn-primary">Войти</button>
+          </form>
+        </div>
+      </main>                                  
+{% endblock content%}
